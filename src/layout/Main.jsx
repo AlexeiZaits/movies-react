@@ -52,7 +52,7 @@ class Main extends React.Component{
 
         this.clearMovies()
 
-        handleRequest(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${name}&type=${filter}`,'GET')
+        handleRequest(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${name}&type=${filter}`,'GET')
         .then( data => {
             this.setMovies(data)
         })
