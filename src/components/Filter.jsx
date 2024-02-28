@@ -1,91 +1,46 @@
-import React from "react"
+import { useState, useEffect } from "react"
 
-class Filter extends React.Component{
 
-    constructor(props){
-        super(props)
-        this.getListMovies = props.getListMovies
-        this.setFilter = props.setFilter
+function Filter({setFilter}){
+
+    const [radio, setRadio] = useState('all')
+
+    function getValue(event){
+        return event.target.value;
     }
 
-    state = {
-        all: true,
-        films: false,
-        serials: false,
+    useEffect(()=> {
+        setFilter(radio)
+    }, [radio])
 
-    }
-
-    handleChange = (event) => {
-        if (event.target.value === 'all'){
-            this.toggleRadio(true, false, false)
-            this.setFilter('filter','')
-            
-        }
-        else if (event.target.value === 'films'){
-            this.toggleRadio(false, true, false)
-            this.setFilter('filter','movie')
-            
-        }
-        else{
-            this.toggleRadio(false, false, true)
-            this.setFilter('filter','series')
-           
-        }
+    function handleClcik(event){
+        setRadio(getValue(event))
         
     }
 
-    toggleRadio = (all, films, serials) => {
-        this.setState({all: all, films: films, serials: serials})
-    }
-
-    render(){
-        const { all, films, serials } = this.state
-
-        return   <form action="#" className="form-row">
-            <p>
+    return   <form action="#" className="form-row">
+        <p>
             <label>
-                <input name="group1" value='all' onChange={this.handleChange} type="radio" checked={all} />
+            <input name="group1" value='' onChange={handleClcik} onClick={handleClcik} type="checkbox" checked={radio ===''? true: false} />
                 <span>all</span>
             </label>
-            </p>
-            <p>
+        </p>
+        <p>
             <label>
-                <input name="group1" value='films' onChange={this.handleChange} type="radio" checked={films} />
+                <input name="group1" value='movie' onChange={handleClcik} onClick={handleClcik} type="checkbox" checked={radio ==='movie'? true: false} />
                 <span>films</span>
             </label>
-            </p>
-            <p>
+        </p>
+        <p>
             <label>
-                <input  name="group1" value='serials' onChange={this.handleChange} type="radio" checked={serials} />
-                <span>serials</span>
+            <input  name="group1" value='series' onChange={handleClcik} onClick={handleClcik} type="checkbox" checked={radio ==='series'? true: false} />
+            <span>serials</span>
             </label>
-            </p>
+        </p>
             
       </form>
       
-
-        // return <form action="#">
-        //     <p>
-        //     <label>
-        //         <input id="all" name="group1" type="radio" value="all" checked />
-        //         <label for="all">all</label>
-        //     </label>
-        //     </p>
-        //     <p>
-        //     <label>
-        //         <input id="films" name="group1" value="all" type="radio" />
-        //         <label for="films">films</label>
-        //     </label>
-        //     </p>
-        //     <p>
-        //     <label>
-        //         <input id="serials" name="group1" value="all" type="radio"  />
-        //         <label for="serials">serials</label>
-        //     </label>
-        //     </p>
-        // </form>
-        
-    }
+    
     
 }
 

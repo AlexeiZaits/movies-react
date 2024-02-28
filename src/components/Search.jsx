@@ -1,57 +1,38 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-class Search extends React.Component{
-    constructor(props){
-        super(props);
-        this.setName = props.setName;
-        this.getCheckSearch = props.getCheckSearch
-        // this.setState({ checkSearch: props.checkSearch })
-    }
-
-    state = {
-        search : '',
-    }
+function Search({setName, getCheckSearch}){
+    
+    const [search, setSearch] = useState('')
 
 
-    handleChange = (event) => {
-		this.setState({[event.target.name]: event.target.value}, () => {
-            this.handleEvent()
-        })
+    useEffect(()=> {
+        handleEvent()
+    }, [search])
+
+    const handleChange = (event) => {
+        setSearch(event.target.value)
 	}
 
-    handleEvent = () => {
-        if (this.state.search === ''){
-            this.setName('name', 'matrix');
+    const handleEvent = () => {
+        if (search === ''){
+            setName('matrix');
         }
         else{
-            this.setName('name', this.state.search);
+            setName(search);
         }
-        // if (event.key === 'Enter' || event.type === 'click'){
-        //     this.cb(this.state.search);
-        // }
-        
-        
-
     }
 
-    render(){
-        const { search } = this.state
-        const checkSearch = this.getCheckSearch()
-        
-        // onKeyDown={this.handleEvent}
-        return <div className="row">
-            <div className="col s12">
-                <div className="input-field  inputSearch">
-                    <input id="email_inline" type="email" onChange={this.handleChange}  placeholder='Название фильма' value={search} name="search" className="validate"/>
-                    <span className="helper-text" data-error="wrong" data-success="right">{ checkSearch === true ? 'Поиск выполнен': 'Поиск не выполнен'}</span>
-                    {/* <button className="btn waves-effect waves-light" onClick={this.handleEvent} >Submit
-                        <i className="material-icons right">send</i>
-                    </button> */}
-                </div>
+    return <div className="row">
+        <div className="col s12">
+            <div className="input-field  inputSearch">
+                <input id="email_inline" type="email" onChange={handleChange}  placeholder='Название фильма' value={search} name="search" className="validate"/>
+                <span className="helper-text" data-error="wrong" data-success="right">{ getCheckSearch() === true ? 'Поиск выполнен': 'Поиск не выполнен'}</span>
+                    
+            </div>
             </div>
         </div>
-    }
+    
 }
 
 export { Search }
